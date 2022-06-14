@@ -1,0 +1,20 @@
+[
+    {
+    "id": "001",
+    "username" : "Darina",
+    "age": 18,
+    "hobbies": ["sport", "traveling", "music"]
+},
+{
+    "id": "002",
+    "username" : "Nina",
+    "age": 25,
+    "hobbies": ["food", "mountains", "Asian culture"]
+},
+{
+    "id": "003",
+    "username" : "Ivan",
+    "age": 30,
+    "hobbies": ["cars", "skateboard", "drones"]
+}
+]

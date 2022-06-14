@@ -1,0 +1,43 @@
+{
+  "name": "simple-crud-api",
+  "version": "1.0.0",
+  "description": "[Assignment link](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.ts",
+    "dev": "nodemon app.ts",
+    "develop": "webpack-dev-server --mode development",
+    "prod": "webpack --mode production",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekater1na/simple-crud-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekater1na/simple-crud-api/issues"
+  },
+  "homepage": "https://github.com/ekater1na/simple-crud-api#readme",
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/node": "^17.0.42",
+    "@types/webpack": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.17.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.7.0",
+    "ts-loader": "^9.3.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3",
+    "uuid": "^8.3.2",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
