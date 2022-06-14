@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.ts",
-    "dev": "nodemon app.ts",
-    "develop": "webpack-dev-server --mode development",
-    "prod": "webpack --mode production",
+    "start:dev": "nodemon app.ts",
+    "start:prod": "webpack",    
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "build": "webpack",
+    "build": "webpack --mode production",
+    "develop": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +23,11 @@
     "url": "https://github.com/ekater1na/simple-crud-api/issues"
   },
   "homepage": "https://github.com/ekater1na/simple-crud-api#readme",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/node": "^17.0.42",
