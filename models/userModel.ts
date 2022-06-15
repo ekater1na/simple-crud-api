@@ -35,3 +35,11 @@ export const update = async (id: string, user: IUser) => {
   });
 };
 
+export const remove = async (id: string) => {
+  return new Promise<void>((resolve, reject) => {
+    const deletedUser = users.filter((user) => user.id !== id);
+
+    writeDataToFile('./data/users.json', deletedUser);
+    resolve();
+  });
+};

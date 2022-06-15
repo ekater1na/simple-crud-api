@@ -12,18 +12,6 @@
     "hobbies": ["food", "mountains", "Asian culture"]
   },
   {
-    "id": "003",
-    "username": "Ivan",
-    "age": 30,
-    "hobbies": ["cars", "skateboard", "drones"]
-  },
-  {
-    "id": "b5486cef-20e2-4caf-bbf8-bb75d332d358",
-    "username": "***",
-    "age": 99,
-    "hobbies": "***"
-  },
-  {
     "id": "a2650d64-a9a9-44b5-a4be-0ecd31292962",
     "username": "Karina",
     "age": 36,

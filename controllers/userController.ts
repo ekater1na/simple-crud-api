@@ -59,26 +59,44 @@ export const createUser = async (req, res) => {
 // @route PUT /api/users/:id
 export const updateUser = async (req, res, id) => {
   try {
-    const user: IUser = await User.findById(id) as IUser;
+    const user: IUser = (await User.findById(id)) as IUser;
 
     if (!user) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'User not found' }));
     } else {
-      const body = await getPostData(req);   
+      const body = await getPostData(req);
 
       const { username, age, hobbies } = JSON.parse(body as string);
 
-      const userData: IUser  = {
-        username: username || user.username ,
+      const userData: IUser = {
+        username: username || user.username,
         age: age || user.age,
-        hobbies: hobbies || user.hobbies
+        hobbies: hobbies || user.hobbies,
       };
 
       const updUser = await User.update(id, userData);
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify(updUser));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// @desc Delete User
+// @route DELETE /api/users/:id
+export const removeUser = async (req, res, id) => {
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User not found' }));
+    } else {
+      await User.remove(id);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: `User ${id} removed` }));
     }
   } catch (err) {
     console.log(err);
