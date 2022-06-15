@@ -59,7 +59,6 @@ export const createUser = async (req, res) => {
 // @route PUT /api/users/:id
 export const updateUser = async (req, res, id) => {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user: IUser = await User.findById(id) as IUser;
 
     if (!user) {

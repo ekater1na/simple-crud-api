@@ -11,7 +11,7 @@ export const findAll = async () => {
 
 export const findById = async (id: string) => {
   return new Promise((resolve, reject) => {
-    const user: IUser = users.find((user) => user.id === id);
+    const user = users.find((user) => user.id === id);
     resolve(user);
   });
 };
