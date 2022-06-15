@@ -1,5 +1,6 @@
 import * as User from '../models/userModel';
 import { IUser } from '../interfaces/user';
+import { getPostData } from '../utils/getPostData';
 
 // @desc Get all Users
 // @route GET /api/users
@@ -15,7 +16,7 @@ export const getUsers = async (req, res) => {
 };
 
 // @desc Get User bi Id
-// @route GET /api/user/:id
+// @route GET /api/users/:id
 export const getUsersById = async (req, res, id) => {
   try {
     const user = await User.findById(id);
@@ -32,13 +33,17 @@ export const getUsersById = async (req, res, id) => {
 };
 
 // @desc Add User
-// @route POST /api/user/:id
+// @route POST /api/users
 export const createUser = async (req, res) => {
   try {
+    const body: unknown = await getPostData(req);
+
+    const { username, age, hobbies } = JSON.parse(body as string);
+
     const user: IUser = {
-      username: 'test check',
-      age: 36,
-      hobbies: ['food'],
+      username,
+      age,
+      hobbies,
     };
 
     const newUser = await User.create(user);

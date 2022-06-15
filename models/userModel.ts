@@ -1,6 +1,6 @@
 import users from '../data/users.json';
 import { v4 as uuidv4  } from 'uuid';
-import { writeDataToFile } from '../utils/utils';
+import { writeDataToFile } from '../utils/writeDataToFile';
 
 export const findAll = async () => {
   return new Promise((resolve, reject) => {
