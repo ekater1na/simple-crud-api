@@ -1,6 +1,7 @@
 import users from '../data/users.json';
-import { v4 as uuidv4  } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { writeDataToFile } from '../utils/writeDataToFile';
+import { IUser } from '../interfaces/user';
 
 export const findAll = async () => {
   return new Promise((resolve, reject) => {
@@ -8,18 +9,29 @@ export const findAll = async () => {
   });
 };
 
-export const findById = async (id) => {
+export const findById = async (id: string) => {
   return new Promise((resolve, reject) => {
-    const user = users.find((user) => user.id === id);
+    const user: IUser = users.find((user) => user.id === id);
     resolve(user);
   });
 };
 
-export const create = async (user) => {
+export const create = async (user: IUser) => {
   return new Promise((resolve, reject) => {
-    const newUser = {id: uuidv4(), ...user};
+    const newUser = { id: uuidv4(), ...user };
     users.push(newUser);
-    writeDataToFile('./data/users.json', users)
+    writeDataToFile('./data/users.json', users);
     resolve(newUser);
   });
 };
+
+export const update = async (id: string, user: IUser) => {
+  return new Promise((resolve, reject) => {
+    const index: number = users.findIndex((user) => user.id === id);
+    users[index] = { id, ...user };
+
+    writeDataToFile('./data/users.json', users);
+    resolve(users[index]);
+  });
+};
+

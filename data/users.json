@@ -1,8 +1,8 @@
 [
   {
     "id": "001",
-    "username": "Darina",
-    "age": 18,
+    "username": "Isadora",
+    "age": 19,
     "hobbies": ["sport", "traveling", "music"]
   },
   {
@@ -58,5 +58,11 @@
     "username": "Sandra",
     "age": 55,
     "hobbies": ["gym"]
+  },
+  {
+    "id": "51c7df70-e96d-4d30-896f-eefff3c349f3",
+    "username": "***",
+    "age": 9999,
+    "hobbies": ["**"]
   }
 ]
