@@ -1,6 +1,7 @@
 import * as User from '../models/userModel';
 import { IUser } from '../interfaces/user';
 import { getPostData } from '../utils/getPostData';
+import { validate as isValidUUID } from 'uuid';
 
 // @desc Get all Users
 // @route GET /api/users
@@ -20,12 +21,17 @@ export const getUsers = async (req, res) => {
 export const getUsersById = async (req, res, id) => {
   try {
     const user = await User.findById(id);
-    if (!user) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
-    } else {
+
+    if (user && isValidUUID(id)) {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
+    } else if (user && !isValidUUID(id)) {
+      console.log('id', id, isValidUUID(id));
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User ID is invalid' }));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User not found' }));
     }
   } catch (err) {
     console.log(err);
@@ -46,10 +52,15 @@ export const createUser = async (req, res) => {
       hobbies,
     };
 
-    const newUser = await User.create(user);
+    if (user.username && user.age && user.hobbies) {
+      const newUser = await User.create(user);
 
-    res.writeHead(201, { 'Content-Type': 'application/json' });
-    return res.end(JSON.stringify(newUser));
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify(newUser));
+    } else {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Please, fill required fields' }));
+    }
   } catch (err) {
     console.log(err);
   }
@@ -61,10 +72,7 @@ export const updateUser = async (req, res, id) => {
   try {
     const user: IUser = (await User.findById(id)) as IUser;
 
-    if (!user) {
-      res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
-    } else {
+    if (user && isValidUUID(id)) {
       const body = await getPostData(req);
 
       const { username, age, hobbies } = JSON.parse(body as string);
@@ -79,6 +87,12 @@ export const updateUser = async (req, res, id) => {
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify(updUser));
+    } else if (user && !isValidUUID(id)) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User ID is invalid' }));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User not found' }));
     }
   } catch (err) {
     console.log(err);
@@ -90,13 +104,16 @@ export const updateUser = async (req, res, id) => {
 export const removeUser = async (req, res, id) => {
   try {
     const user = await User.findById(id);
-    if (!user) {
+    if (user && isValidUUID(id)) {
+      await User.remove(id);
+      res.writeHead(204, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: `User ${id} removed` }));
+    } else if (user && !isValidUUID(id)) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User ID is invalid' }));
+    } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'User not found' }));
-    } else {
-      await User.remove(id);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: `User ${id} removed` }));
     }
   } catch (err) {
     console.log(err);
