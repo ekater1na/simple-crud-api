@@ -3,14 +3,19 @@ import { server } from './app';
 import { closeServer } from './tests/closeServer';
 import { IUser } from './interfaces/user';
 
-describe('Get all users request', () => {
-  let id: string;
-  let user: IUser;
+let id: string;
+let user: IUser;
 
-  beforeAll(async () => {
-    console.log('tests');
-  });
+const notUuidId = '001';
+const notExistId = '499dcef0-7b55-4e04-94c9-e1ff01d419ea';
 
+const requiredFieldsMessage = 'Please, fill required fields';
+const notFoundMessage = 'User not found';
+const invalidIdMessage = 'User ID is invalid';
+
+// GET ALL scenarios
+
+describe('GET users requests', () => {
   afterAll(async () => {
     await closeServer(server);
   });
@@ -22,7 +27,28 @@ describe('Get all users request', () => {
     expect(res.body).toBeTruthy();
   });
 
-    it('Post user records with api/users/id request', async () => {
+  it('Get all users with wrong api/user request', async () => {
+    const res = await request(server).get('/api/user');
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it('Get all users without any request from start page', async () => {
+    const res = await request(server).get('');
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toEqual('Route not found');
+  });
+});
+
+// POST scenarios
+
+describe('POST user requests', () => {
+  afterAll(async () => {
+    await closeServer(server);
+  });
+
+  it('Post user records with api/users/id request', async () => {
     const res = await request(server)
       .post('/api/users')
       .send({
@@ -40,6 +66,37 @@ describe('Get all users request', () => {
     expect(res.body.hobbies).toStrictEqual(['swimming']);
   });
 
+  it('Post user records with api/users/id request with wrong field', async () => {
+    const res = await request(server).post('/api/users').send({
+      name: 88,
+    });
+
+    user = res.body;
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe(requiredFieldsMessage);
+  });
+
+  it('Post user records with api/users/id request with wrong field', async () => {
+    const res = await request(server).post('/api/users').send({
+      username: 'Garry',
+      age: '88',
+      address: 'Minsk, 15 Lenina Street',
+    });
+
+    user = res.body;
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe(requiredFieldsMessage);
+  });
+});
+
+// GET user scenarios
+
+describe('GET user requests', () => {
+  afterAll(async () => {
+    await closeServer(server);
+  });
 
   it('Get user with api/users/id request', async () => {
     const res = await request(server).get(`/api/users/${id}`);
@@ -50,6 +107,66 @@ describe('Get all users request', () => {
     expect(res.body).toEqual(user);
   });
 
+  it('Get user with not uuid id with api/users/id request', async () => {
+    const res = await request(server).get(`/api/users/${notUuidId}`);
+    user = res.body;
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toEqual(invalidIdMessage);
+  });
+
+  it('Get user with not exist id with api/users/id request', async () => {
+    const res = await request(server).get(`/api/users/${notExistId}`);
+    user = res.body;
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toEqual(notFoundMessage);
+  });
+});
+
+// PUT user scenarios
+
+describe('PUT user requests', () => {
+  afterAll(async () => {
+    await closeServer(server);
+  });
+
+  it('Put user data with api/users/id request', async () => {
+    const res = await request(server).put(`/api/users/${id}`).send({
+      age: 44,
+    });
+    id = res.body.id;
+    user = res.body;
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.age).toBe(44);
+  });
+
+  it('Put user data with not uuid id with api/users/id request', async () => {
+    const res = await request(server).put(`/api/users/${notUuidId}`).send({
+      age: 30,
+    });
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe(invalidIdMessage);
+  });
+
+  it('Put user data with not exist with api/users/id request', async () => {
+    const res = await request(server).put(`/api/users/${notExistId}`).send({
+      age: 78,
+    });
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toBe(notFoundMessage);
+  });
+});
+
+// DELETE scenarios
+
+describe('DELETE user requests', () => {
+  afterAll(async () => {
+    await closeServer(server);
+  });
 
   it('Delete user  with api/users/id request', async () => {
     const res = await request(server).delete(`/api/users/${id}`);
@@ -58,5 +175,21 @@ describe('Get all users request', () => {
 
     expect(res.statusCode).toBe(204);
     expect(res.body).toEqual(user);
+  });
+
+  it('Delete user with not uuid id with api/users/id request', async () => {
+    const res = await request(server).delete(`/api/users/${notUuidId}`);
+    user = res.body;
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toEqual(invalidIdMessage);
+  });
+
+  it('Delete user with not exist id with api/users/id request', async () => {
+    const res = await request(server).delete(`/api/users/${notExistId}`);
+    user = res.body;
+
+    expect(res.statusCode).toBe(404);
+    expect(res.body.message).toEqual(notFoundMessage);
   });
 });
