@@ -1,6 +1,6 @@
 import path from 'path';
 
-module.exports = {
+module.exports = { 
   mode: "development",
   devtool: "inline-source-map",
   entry: "./app.ts",
@@ -11,12 +11,15 @@ module.exports = {
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
     extensions: [".ts", ".tsx", ".js"],
-    fallback: { "http": false } 
+    fallback: { "http": false,
+                "os": false,
+                "path": false,
+                "fs": false }
   },
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       { test: /\.tsx?$/, loader: "ts-loader" }
     ]
-  }
+  }  
 };
