@@ -14,7 +14,7 @@
   {
     "id": "a2650d64-a9a9-44b5-a4be-0ecd31292962",
     "username": "Karina",
-    "age": 36,
+    "age": 70,
     "hobbies": ["food"]
   },
   {
@@ -46,5 +46,11 @@
     "username": "Sandra",
     "age": 55,
     "hobbies": ["gym"]
+  },
+  {
+    "id": "cb75c42d-fa65-403f-8c43-a7c55568cb0b",
+    "username": "German",
+    "age": 70,
+    "hobbies": ["swimming"]
   }
 ]

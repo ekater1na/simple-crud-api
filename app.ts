@@ -9,7 +9,7 @@ import {
 } from './controllers/userController';
 import 'dotenv/config';
 
-const server = http.createServer((req, res) => {
+export const server = http.createServer((req, res) => {
   try {
     if (req.url === '/api/users' && req.method === 'GET') {
       getUsers(req, res);
@@ -28,12 +28,14 @@ const server = http.createServer((req, res) => {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Route not found' }));
     }
-  } catch {
+  } catch (err) {
     res.writeHead(500, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'No answer from server' }));
   }
 });
 
-server.listen(process.env.PORT, () =>
-  console.log(`Server running on port ${process.env.PORT}`)
-);
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(process.env.PORT, () =>
+    console.log(`Server running on port ${process.env.PORT}`)
+  );
+}
