@@ -6,10 +6,10 @@
 
 Simple CRUD API server what can do operations for:
 
-- Create users;
-- Read users;
-- Update users;
-- Delete users.
+- Create users
+- Read users
+- Update users
+- Delete users
 _____________________
 
 ### Installation
@@ -26,6 +26,7 @@ $ npm i
 ```sh
 $ npm run start:dev
 $ npm run start:prod
+npm run multi
 ```
 3. Run test
 
