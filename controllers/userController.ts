@@ -26,7 +26,6 @@ export const getUsersById = async (req, res, id) => {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(user));
     } else if (user && !isValidUUID(id)) {
-      console.log('id', id, isValidUUID(id));
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'User ID is invalid' }));
     } else {

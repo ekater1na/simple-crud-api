@@ -49,13 +49,16 @@ describe('POST user requests', () => {
   });
 
   it('Post user records with api/users/id request', async () => {
+    const data = {
+      username: 'German',
+      age: 70,
+      hobbies: ['swimming'],
+    }
+
     const res = await request(server)
       .post('/api/users')
-      .send({
-        username: 'German',
-        age: 70,
-        hobbies: ['swimming'],
-      });
+      .send(data)
+      .set("Accept", "application/json");
 
     id = res.body.id;
     user = res.body;
@@ -64,12 +67,15 @@ describe('POST user requests', () => {
     expect(res.body.username).toBe('German');
     expect(res.body.age).toBe(70);
     expect(res.body.hobbies).toStrictEqual(['swimming']);
+
   });
 
   it('Post user records with api/users/id request with wrong field', async () => {
-    const res = await request(server).post('/api/users').send({
-      name: 88,
-    });
+    const data = { name: 88 };
+
+    const res = await request(server).post('/api/users')
+    .send(data)
+    .set("Accept", "application/json");    
 
     user = res.body;
 
@@ -77,12 +83,16 @@ describe('POST user requests', () => {
     expect(res.body.message).toBe(requiredFieldsMessage);
   });
 
-  it('Post user records with api/users/id request with wrong field', async () => {
-    const res = await request(server).post('/api/users').send({
+  it('Post user records with api/users/id request with   not existed  field', async () => {
+    const data = {
       username: 'Garry',
       age: '88',
       address: 'Minsk, 15 Lenina Street',
-    });
+    }
+
+    const res = await request(server).post('/api/users')
+      .send(data)
+      .set("Accept", "application/json");
 
     user = res.body;
 
@@ -191,5 +201,38 @@ describe('DELETE user requests', () => {
 
     expect(res.statusCode).toBe(404);
     expect(res.body.message).toEqual(notFoundMessage);
+  });
+});
+
+// GET deleted user scenarios
+
+describe('GET deleted user requests', () => {
+  afterAll(async () => {
+    await closeServer(server);
+  });
+
+  it('Get deleted user with api/users/id request', async () => {
+
+    const res = await request(server)
+      .delete(`/api/users/${id}`)
+      .get(`/api/users/${id}`)  
+
+    expect(res).toBe(undefined);
+  });
+
+  it('Get deleted user with not uuid id with api/users/id request', async () => {
+    const res = await request(server)
+    .delete(`/api/users/${notUuidId}`)
+    .get(`/api/users/${id}`);
+
+    expect(res).toBe(undefined);
+  });
+
+  it('Get deleted user with not exist id with api/users/id request', async () => {
+    const res = await request('server')
+    .delete(`/api/users/${notUuidId}`)
+    .get(`/api/users/${id}`);
+    
+    expect(res).toBeFalsy();
   });
 });
