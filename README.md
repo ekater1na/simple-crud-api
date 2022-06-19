@@ -1,7 +1,49 @@
-# simple-crud-api
+#  Task: Simple-crud-api
 
-### Task: CRUD API
 
+# Tutorial
+
+
+Simple CRUD API server what can do operations for:
+
+- Create users
+- Read users
+- Update users
+- Delete users
+_____________________
+
+### Installation
+
+1. Clone this repo and install the dependencies:
+
+```sh
+$ git https://github.com/ekater1na/simple-crud-api
+$ cd simple_crud_api/
+$ npm i
+```
+2. Run server:
+
+```sh
+$ npm run start:dev
+$ npm run start:prod
+$ npm run multi
+```
+3. Run tests:
+
+```sh
+$ npm run test
+$ npm run test:coverage
+```
+
+You can browse the apis at http://localhost:5000
+
+
+_____________________
+### Thanks!
+_____________________
+### Task details
+<details>
+ <summary>Task details</summary>
 
 [Assignment link](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md)
 
@@ -104,3 +146,6 @@ Your task is to implement simple CRUD API using in-memory database underneath.
 ### Deadline: 19-06-20222
 
 ### Max Score: 202
+
+</details>
+

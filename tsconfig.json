@@ -1,0 +1,12 @@
+{
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "compilerOptions": {
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "esModuleInterop": true
+  }
+}
