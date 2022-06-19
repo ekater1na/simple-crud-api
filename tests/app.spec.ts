@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { server } from './app';
-import { closeServer } from './tests/closeServer';
-import { IUser } from './interfaces/user';
+import { server } from '../app';
+import { closeServer } from './closeServer';
+import { IUser } from '../interfaces/user';
 
 let id: string;
 let user: IUser;
@@ -9,7 +9,7 @@ let user: IUser;
 const notUuidId = '001';
 const notExistId = '499dcef0-7b55-4e04-94c9-e1ff01d419ea';
 
-import { requiredFieldsMessage, notFoundMessage,  invalidIdMessage } from './utils/messages';
+import { requiredFieldsMessage, notFoundMessage,  invalidIdMessage } from '../utils/messages';
 
 // GET ALL scenarios
 
@@ -62,6 +62,7 @@ describe('POST user requests', () => {
     user = res.body;
 
     expect(res.statusCode).toBe(201);
+    expect(res.headers['content-type']).toMatch('application/json');
     expect(res.body.username).toBe('German');
     expect(res.body.age).toBe(70);
     expect(res.body.hobbies).toStrictEqual(['swimming']);
@@ -78,6 +79,7 @@ describe('POST user requests', () => {
     user = res.body;
 
     expect(res.statusCode).toBe(400);
+    expect(res.headers['content-type']).toMatch('application/json');
     expect(res.body.message).toBe(requiredFieldsMessage);
   });
 
@@ -95,6 +97,7 @@ describe('POST user requests', () => {
     user = res.body;
 
     expect(res.statusCode).toBe(400);
+    expect(res.headers['content-type']).toMatch('application/json');
     expect(res.body.message).toBe(requiredFieldsMessage);
   });
 });
@@ -112,6 +115,7 @@ describe('GET user requests', () => {
     user = res.body;
 
     expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('id');
     expect(res.body).toEqual(user);
   });
 
@@ -147,6 +151,7 @@ describe('PUT user requests', () => {
     user = res.body;
 
     expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('age');
     expect(res.body.age).toBe(44);
   });
 
