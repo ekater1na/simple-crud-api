@@ -14,21 +14,21 @@ _____________________
 
 ### Installation
 
-1. Clone this repo and install the dependencies
+1. Clone this repo and install the dependencies:
 
 ```sh
 $ git https://github.com/ekater1na/simple-crud-api
 $ cd simple_crud_api/
 $ npm i
 ```
-2. Run server
+2. Run server:
 
 ```sh
 $ npm run start:dev
 $ npm run start:prod
-npm run multi
+$ npm run multi
 ```
-3. Run test
+3. Run tests:
 
 ```sh
 $ npm run test
