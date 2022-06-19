@@ -1,4 +1,5 @@
 import * as http from 'http';
+import 'dotenv/config';
 
 import {
   getUsers,
@@ -7,23 +8,24 @@ import {
   updateUser,
   removeUser,
 } from './controllers/userController';
-import 'dotenv/config';
 
 export const server = http.createServer((req, res) => {
+  const path = '/api/users';
+  const id = req.url.split('/')[3];
+
   try {
-    if (req.url === '/api/users' && req.method === 'GET') {
+    if (req.url === path && req.method === 'GET') {
       getUsers(req, res);
-    } else if (req.url.match(/\/api\/users\/\w+/) && req.method === 'GET') {
-      const id = req.url.split('/')[3];
-      getUsersById(req, res, id);
-    } else if (req.url === '/api/users' && req.method === 'POST') {
+    } else if (req.url === path && req.method === 'POST') {
       createUser(req, res);
-    } else if (req.url.match(/\/api\/users\/\w+/) && req.method === 'PUT') {
-      const id = req.url.split('/')[3];
-      updateUser(req, res, id);
-    } else if (req.url.match(/\/api\/users\/\w+/) && req.method === 'DELETE') {
-      const id = req.url.split('/')[3];
-      removeUser(req, res, id);
+    } else if (req.url.match(/\/api\/users\/\w+/)) {
+      if (req.method === 'GET') {
+        getUsersById(req, res, id);
+      } else if (req.method === 'PUT') {
+        updateUser(req, res, id);
+      } else if (req.method === 'DELETE') {
+        removeUser(req, res, id);
+      }
     } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Route not found' }));

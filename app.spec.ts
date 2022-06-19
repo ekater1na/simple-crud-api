@@ -9,9 +9,7 @@ let user: IUser;
 const notUuidId = '001';
 const notExistId = '499dcef0-7b55-4e04-94c9-e1ff01d419ea';
 
-const requiredFieldsMessage = 'Please, fill required fields';
-const notFoundMessage = 'User not found';
-const invalidIdMessage = 'User ID is invalid';
+import { requiredFieldsMessage, notFoundMessage,  invalidIdMessage } from './utils/messages';
 
 // GET ALL scenarios
 
@@ -87,7 +85,7 @@ describe('POST user requests', () => {
     const data = {
       username: 'Garry',
       age: '88',
-      address: 'Minsk, 15 Lenina Street',
+      address: 'Minsk, 15 Garden Street',
     }
 
     const res = await request(server).post('/api/users')

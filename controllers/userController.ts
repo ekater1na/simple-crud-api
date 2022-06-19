@@ -3,6 +3,9 @@ import { IUser } from '../interfaces/user';
 import { getPostData } from '../utils/getPostData';
 import { validate as isValidUUID } from 'uuid';
 
+import { requiredFieldsMessage, notFoundMessage,  invalidIdMessage } from '../utils/messages';
+
+
 // @desc Get all Users
 // @route GET /api/users
 export const getUsers = async (req, res) => {
@@ -27,10 +30,10 @@ export const getUsersById = async (req, res, id) => {
       res.end(JSON.stringify(user));
     } else if (user && !isValidUUID(id)) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User ID is invalid' }));
+      res.end(JSON.stringify({ message: invalidIdMessage }));
     } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.end(JSON.stringify({ message: notFoundMessage }));
     }
   } catch (err) {
     console.log(err);
@@ -58,7 +61,7 @@ export const createUser = async (req, res) => {
       return res.end(JSON.stringify(newUser));
     } else {
       res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Please, fill required fields' }));
+      res.end(JSON.stringify({ message: requiredFieldsMessage }));
     }
   } catch (err) {
     console.log(err);
@@ -88,10 +91,10 @@ export const updateUser = async (req, res, id) => {
       return res.end(JSON.stringify(updUser));
     } else if (user && !isValidUUID(id)) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User ID is invalid' }));
+      res.end(JSON.stringify({ message: invalidIdMessage }));
     } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.end(JSON.stringify({ message: notFoundMessage }));
     }
   } catch (err) {
     console.log(err);
@@ -109,10 +112,10 @@ export const removeUser = async (req, res, id) => {
       res.end(JSON.stringify({ message: `User ${id} removed` }));
     } else if (user && !isValidUUID(id)) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User ID is invalid' }));
+      res.end(JSON.stringify({ message: invalidIdMessage }));
     } else {
       res.writeHead(404, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User not found' }));
+      res.end(JSON.stringify({ message: notFoundMessage }));
     }
   } catch (err) {
     console.log(err);
