@@ -35,11 +35,10 @@ $ npm run test:coverage
 ```
 
 You can browse the apis at http://localhost:5000
----
+
 
 _____________________
-## Thanks!
-
+### Thanks!
 _____________________
 ### Task details
 <details>
